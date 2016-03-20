@@ -13,7 +13,7 @@ response = http.get_content("https://api.github.com/search/repositories?q=langua
 parsed = JSON.parse(response)
 
 names = parsed["items"].map{|e| e["full_name"]}
-puts(names)     # if you just want to print all of them
+# puts(names)     # if you just want to print all of them as elements?
 
-#string = names.join([separator = ',']) not sure how to use the join thing, or for what reason -- best guess is in above line I am printing ea. element separately, when in fact I want to print it all as one string joined by new line?
-
+string = names.join("\n")    # if you instead want to combine elements into one string and print on separate lines
+puts(string)
