@@ -9,6 +9,10 @@ request_headers = {
 }
 
 request = Request('https://api.github.com/search/repositories?q=language:python&sort=stars&order=desc')
-response = urlopen(request)
-string = response.read()
-print string
+
+try:
+        response = urlopen(request)
+        string = response.read()
+        print string
+except URLError, e:
+    print "Error code: ", e
