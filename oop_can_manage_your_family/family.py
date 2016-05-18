@@ -32,7 +32,12 @@ class Person:
             raise Exception("genre is not valid")
         else:
             self.__genre = genre
-        self.__eyes_color = eyes_color
+
+        if type(eyes_color) is not str \
+           or not eyes_color in self.EYES_COLORS:
+            raise Exception("eyes_color is not valid")
+        else:
+            self.__eyes_color = eyes_color
 
         ''' public attributes '''
         self.last_name = "Has not been set yet."
