@@ -28,7 +28,7 @@ class Person:
             self.__date_of_birth = date_of_birth
 
         if type(genre) is not str \
-           or not (genre == self.GENRES[0] or genre == self.GENRES[1]):
+           or not genre in self.GENRES:
             raise Exception("genre is not valid")
         else:
             self.__genre = genre
