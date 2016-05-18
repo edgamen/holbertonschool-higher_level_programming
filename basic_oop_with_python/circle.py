@@ -1,3 +1,5 @@
+from math import pi
+
 ''' Class '''
 class Circle():
 
@@ -27,4 +29,4 @@ class Circle():
         self.__center = center
 
     def area(self):
-        return 3.14 * self.__radius**2
+        return pi * self.__radius**2
