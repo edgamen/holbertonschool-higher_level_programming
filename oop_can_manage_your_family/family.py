@@ -1,3 +1,6 @@
+import os.path
+import ast
+
 ''' Class definition '''
 class Person:
 
@@ -58,6 +61,32 @@ class Person:
     def get_first_name(self):
         return self.__first_name
 
+    ''' public method to generate a hash from Person attributes'''
+    def json(self):
+        return {'id': self.__id, 'eyes_color': self.__eyes_color, 'genre': \
+                self.__genre, 'date_of_birth': self.__date_of_birth, 'first_name': \
+                self.__first_name, 'last_name': self.last_name}
+
+    ''' public method to store values from a hash as Person attributes '''
+    def load_from_json(self, json):
+        if type(json) is not dict:
+            raise Exception("json is not valid")
+        else:
+            if 'id' in json:
+                self.__id = json['id']
+            if 'eyes_color' in json:
+                self.__eyes_colors = json['eyes_color']
+            if 'genre' in json:
+                self.__genre = json['genre']
+            if 'date_of_birth' in json:
+                self.__date_of_birth = json['date_of_birth']
+            if 'first_name' in json:
+                self.__first_name = json['first_name']
+            if 'first_name' in json:
+                self.__first_name = json['first_name']
+            if 'last_name' in json:
+                self.last_name = json['last_name']
+    
     ''' public method to check if person is Male '''
     def is_male(self):
         return self.__genre == "Male"
@@ -73,7 +102,7 @@ class Person:
             age = age - 1
         return age
 
-    ''' magic methods to overload operators in respect to age '''
+    ''' magic methods to overload operators w/ respect to age '''
     def __eq__(self, other):
         return self.age() == other.age()
     def __ne__(self, other):
@@ -99,7 +128,7 @@ class Baby(Person):
     def can_vote(self):
         return False
 
-''' Define a Baby class '''
+''' Define a Teenager class '''
 class Teenager(Person):
     ''' public methods '''
     def can_run(self):
@@ -111,7 +140,7 @@ class Teenager(Person):
     def can_vote(self):
         return False
 
-''' Define a Baby class '''
+''' Define a Adult class '''
 class Adult(Person):
     ''' public methods '''
     def can_run(self):
@@ -123,7 +152,7 @@ class Adult(Person):
     def can_vote(self):
         return True
 
-''' Define a Baby class '''
+''' Define a Senior class '''
 class Senior(Person):
     ''' public methods '''
     def can_run(self):
@@ -134,5 +163,23 @@ class Senior(Person):
         return False
     def can_vote(self):
         return True
-
     
+''' Take a list of Person and write a JSON file '''
+def save_to_file(list, filename):
+    if type(filename) is not str \
+       or not os.path.isfile(filename):
+        raise Exception("filename is not valid or does not exist")
+    else:
+        f = open(filename, 'w')
+        f.write(str(list))
+        f.close()
+
+def load_from_file(filename):
+    if type(filename) is not str \
+       or not os.path.isfile(filename):
+        raise Exception("filename is not valid or does not exist")
+    else:
+        f = open(filename, 'r')
+        filecontents = f.read()
+        f.close()
+        return ast.literal_eval(filecontents)
