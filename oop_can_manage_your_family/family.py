@@ -28,13 +28,13 @@ class Person:
             self.__date_of_birth = date_of_birth
 
         if type(genre) is not str \
-           or not genre in self.GENRES:
+           or not genre in Person.GENRES:
             raise Exception("genre is not valid")
         else:
             self.__genre = genre
 
         if type(eyes_color) is not str \
-           or not eyes_color in self.EYES_COLORS:
+           or not eyes_color in Person.EYES_COLORS:
             raise Exception("eyes_color is not valid")
         else:
             self.__eyes_color = eyes_color
@@ -58,6 +58,31 @@ class Person:
     def get_first_name(self):
         return self.__first_name
 
-    ''' public method to chck if person is Male '''
+    ''' public method to check if person is Male '''
     def is_male(self):
         return self.__genre == "Male"
+
+    ''' public method to calculate age in years based 
+        on the date 05/20/16 '''
+    def age(self):
+        age = 2016 - self.__date_of_birth[2]
+        if self.__date_of_birth > 5:
+            age = age - 1
+        elif self.__date_of_birth[1] == 5 \
+             and self.__date_of_birth[0] > 20:
+            age = age - 1
+        return age
+
+    ''' magic methods to overload operators in respect to age '''
+    def __eq__(self, other):
+        return self.age() == other.age()
+    def __ne__(self, other):
+        return self.age() != other.age()
+    def __lt__(self, other):
+        return self.age() < other.age()
+    def __gt__(self, other):
+        return self.age() > other.age()
+    def __le__(self, other):
+        return self.age() <= other.age()
+    def __ge__(self, other):
+        return self.age() >= other.age()
