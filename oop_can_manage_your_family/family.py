@@ -41,3 +41,17 @@ class Person:
 
         ''' public attributes '''
         self.last_name = "Has not been set yet."
+
+    ''' public methods '''
+    def get_id(self):
+        return self.__id
+    def get_eyes_color(self):
+        return self.__eyes_color
+    def get_genre(self):
+        return self.__genre
+    def get_date_of_birth(self):
+        return self.__date_of_birth
+    def get_first_name(self):
+        return self.__first_name
+    
+    
