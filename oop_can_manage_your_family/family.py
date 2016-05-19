@@ -1,7 +1,7 @@
 ''' Class definition '''
 class Person:
 
-    ''' class attributes? '''
+    ''' class attributes '''
     EYES_COLORS = ["Blue", "Green", "Brown"]
     GENRES = ["Female", "Male"]
     
@@ -86,3 +86,53 @@ class Person:
         return self.age() <= other.age()
     def __ge__(self, other):
         return self.age() >= other.age()
+
+''' Define a Baby class '''
+class Baby(Person):
+    ''' public methods '''
+    def can_run(self):
+        return False
+    def need_help(self):
+        return True
+    def is_young(self):
+        return True
+    def can_vote(self):
+        return False
+
+''' Define a Baby class '''
+class Teenager(Person):
+    ''' public methods '''
+    def can_run(self):
+        return True
+    def need_help(self):
+        return False
+    def is_young(self):
+        return True
+    def can_vote(self):
+        return False
+
+''' Define a Baby class '''
+class Adult(Person):
+    ''' public methods '''
+    def can_run(self):
+        return True
+    def need_help(self):
+        return False
+    def is_young(self):
+        return False
+    def can_vote(self):
+        return True
+
+''' Define a Baby class '''
+class Senior(Person):
+    ''' public methods '''
+    def can_run(self):
+        return False
+    def need_help(self):
+        return True
+    def is_young(self):
+        return False
+    def can_vote(self):
+        return True
+
+    
