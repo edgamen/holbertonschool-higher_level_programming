@@ -42,7 +42,11 @@ class Person:
         ''' public attributes '''
         self.last_name = "Has not been set yet."
 
-    ''' public methods '''
+    ''' base class descriptions '''
+    def __str__(self):
+        return self.__first_name + " " + self.last_name
+        
+    ''' public methods to retrieve private attributes'''
     def get_id(self):
         return self.__id
     def get_eyes_color(self):
@@ -53,5 +57,7 @@ class Person:
         return self.__date_of_birth
     def get_first_name(self):
         return self.__first_name
-    
-    
+
+    ''' public method to chck if person is Male '''
+    def is_male(self):
+        return self.__genre == "Male"
