@@ -1,5 +1,5 @@
 import os.path
-import ast
+import json
 
 ''' Class definition '''
 class Person:
@@ -63,8 +63,9 @@ class Person:
 
     ''' public method to generate a hash from Person attributes'''
     def json(self):
-        return {'id': self.__id, 'eyes_color': self.__eyes_color, 'genre': \
-                self.__genre, 'date_of_birth': self.__date_of_birth, 'first_name': \
+        return {'id': self.__id, 'kind': self.__class__.__name__, 'eyes_color': \
+                self.__eyes_color, 'genre': self.__genre, 'date_of_birth': \
+                self.__date_of_birth, 'first_name': \
                 self.__first_name, 'last_name': self.last_name}
 
     ''' public method to store values from a hash as Person attributes '''
@@ -164,22 +165,41 @@ class Senior(Person):
     def can_vote(self):
         return True
     
-''' Take a list of Person and write a JSON file '''
+''' Take a list of Person or subclass instances and write a JSON file '''
 def save_to_file(list, filename):
     if type(filename) is not str \
        or not os.path.isfile(filename):
         raise Exception("filename is not valid or does not exist")
+    # convert each item of the list into a hash of its attributes
     else:
+        for i in range(len(list)):
+            list[i] = list[i].json()
+        json_string = json.dumps(list)
         f = open(filename, 'w')
-        f.write(str(list))
+        f.write(json_string)
         f.close()
 
+''' Takes a JSON-formatted string and converts it into a list
+    of Person or subclasses (Baby, Senior, etc.) instances '''
 def load_from_file(filename):
     if type(filename) is not str \
        or not os.path.isfile(filename):
         raise Exception("filename is not valid or does not exist")
     else:
         f = open(filename, 'r')
-        filecontents = f.read()
+        list = json.loads(f.read())
         f.close()
-        return ast.literal_eval(filecontents)
+
+        # alternatively: create a new list and append each person to the new list
+        for i in range(len(list)):
+            if list[i]['kind'] == "Baby":
+                someone = Baby(0, "first_name", [01, 01, 1000], "Male", "Brown")
+            elif list[i]['kind'] == "Teenager":
+                someone = Teenager(0, "first_name", [01, 01, 1000], "Male", "Brown")
+            elif list[i]['kind'] == "Senior":
+                someone = Senior(0, "first_name", [01, 01, 1000], "Male", "Brown")
+            else:
+                someone = Person(0, "first_name", [01, 01, 1000], "Male", "Brown")
+            someone.load_from_json(list[i])
+            list[i] = someone
+        return list
