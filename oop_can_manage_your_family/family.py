@@ -44,6 +44,7 @@ class Person:
 
         ''' public attributes '''
         self.last_name = "Has not been set yet."
+        self.is_married_to = 0
 
     ''' base class descriptions '''
     def __str__(self):
@@ -65,8 +66,8 @@ class Person:
     def json(self):
         return {'id': self.__id, 'kind': self.__class__.__name__, 'eyes_color': \
                 self.__eyes_color, 'genre': self.__genre, 'date_of_birth': \
-                self.__date_of_birth, 'first_name': \
-                self.__first_name, 'last_name': self.last_name}
+                self.__date_of_birth, 'first_name': self.__first_name, \
+                'last_name': self.last_name, 'is_married_to': self.is_married_to}
 
     ''' public method to store values from a hash as Person attributes '''
     def load_from_json(self, json):
@@ -87,8 +88,32 @@ class Person:
                 self.__first_name = json['first_name']
             if 'last_name' in json:
                 self.last_name = json['last_name']
+            if 'is_married_to' in json:
+                self.is_married_to = json['is_married_to']
     
-    ''' public method to check if person is Male '''
+    ''' public method to check if Person is married'''
+    def is_married(self):
+        return (self.is_married_to != 0)
+
+    ''' public method to unlink two people and reset is_married_to status '''
+    def divorce(self, p):
+        self.is_married_to = 0
+        p.is_married_to = 0
+
+    def just_married_with(self, p):
+        if self.is_married() or p.is_married():
+            raise Exception("Already married")
+        elif not self.can_be_married() or not p.can_be_married():
+            raise Exception("Can't be married")
+        else:
+            self.is_married_to = p.get_id()
+            p.is_married_to = self.get_id()
+            if self.get_genre() == "Female" and p.get_genre() == "Male":
+                self.last_name = p.last_name
+            elif self.get_genre() == "Male" and p.get_genre() == "Female":
+                p.last_name = self.last_name
+                
+    ''' public method to check if Person is Male '''
     def is_male(self):
         return self.__genre == "Male"
 
@@ -128,6 +153,8 @@ class Baby(Person):
         return True
     def can_vote(self):
         return False
+    def can_be_married(self):
+        return False
 
 ''' Define a Teenager class '''
 class Teenager(Person):
@@ -139,6 +166,8 @@ class Teenager(Person):
     def is_young(self):
         return True
     def can_vote(self):
+        return False
+    def can_be_married(self):
         return False
 
 ''' Define a Adult class '''
@@ -152,6 +181,8 @@ class Adult(Person):
         return False
     def can_vote(self):
         return True
+    def can_be_married(self):
+        return True
 
 ''' Define a Senior class '''
 class Senior(Person):
@@ -163,6 +194,8 @@ class Senior(Person):
     def is_young(self):
         return False
     def can_vote(self):
+        return True
+    def can_be_married(self):
         return True
     
 ''' Take a list of Person or subclass instances and write a JSON file '''
@@ -192,12 +225,15 @@ def load_from_file(filename):
 
         # alternatively: create a new list and append each person to the new list
         for i in range(len(list)):
-            if list[i]['kind'] == "Baby":
-                someone = Baby(0, "first_name", [01, 01, 1000], "Male", "Brown")
-            elif list[i]['kind'] == "Teenager":
-                someone = Teenager(0, "first_name", [01, 01, 1000], "Male", "Brown")
-            elif list[i]['kind'] == "Senior":
-                someone = Senior(0, "first_name", [01, 01, 1000], "Male", "Brown")
+            if 'kind' in list[i]:
+                if list[i]['kind'] == "Baby":
+                    someone = Baby(0, "first_name", [01, 01, 1000], "Male", "Brown")
+                elif list[i]['kind'] == "Teenager":
+                    someone = Teenager(0, "first_name", [01, 01, 1000], "Male", "Brown")
+                elif list[i]['kind'] == "Adult":
+                    someone = Adult(0, "first_name", [01, 01, 1000], "Male", "Brown")
+                elif list[i]['kind'] == "Senior":
+                    someone = Senior(0, "first_name", [01, 01, 1000], "Male", "Brown")
             else:
                 someone = Person(0, "first_name", [01, 01, 1000], "Male", "Brown")
             someone.load_from_json(list[i])
