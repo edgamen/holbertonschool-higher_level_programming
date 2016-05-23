@@ -45,6 +45,7 @@ class Person:
         ''' public attributes '''
         self.last_name = "Has not been set yet."
         self.is_married_to = 0
+        self.children = []
 
     ''' base class descriptions '''
     def __str__(self):
@@ -64,10 +65,10 @@ class Person:
 
     ''' public method to generate a hash from Person attributes'''
     def json(self):
-        return {'id': self.__id, 'kind': self.__class__.__name__, 'eyes_color': \
-                self.__eyes_color, 'genre': self.__genre, 'date_of_birth': \
-                self.__date_of_birth, 'first_name': self.__first_name, \
-                'last_name': self.last_name, 'is_married_to': self.is_married_to}
+        return {'id': self.__id, 'kind': self.__class__.__name__, 'first_name': \
+                self.__first_name, 'last_name': self.last_name, 'is_married_to': \
+                self.is_married_to, 'eyes_color': self.__eyes_color, 'genre': \
+                self.__genre, 'date_of_birth': self.__date_of_birth}
 
     ''' public method to store values from a hash as Person attributes '''
     def load_from_json(self, json):
@@ -100,6 +101,7 @@ class Person:
         self.is_married_to = 0
         p.is_married_to = 0
 
+    ''' public method to link two people together using is_married_to attribute '''
     def just_married_with(self, p):
         if self.is_married() or p.is_married():
             raise Exception("Already married")
@@ -112,7 +114,28 @@ class Person:
                 self.last_name = p.last_name
             elif self.get_genre() == "Male" and p.get_genre() == "Female":
                 p.last_name = self.last_name
-                
+
+    ''' public method to create a new Baby and link id to children list for parents '''
+    def has_child_with(self, p, id, first_name, date_of_birth, genre, eyes_color):
+        if self.can_have_child == False:
+            raise Exception("Can't have a child")
+        if p is None or p.can_have_child == False:
+            raise Exception("p can't have a child")
+        else:
+            baby = Baby(id, first_name, date_of_birth, genre, eyes_color)
+            self.children.append(baby.get_id())
+            p.children.append(baby.get_id())
+
+    ''' public method to link id of a child to an adult '''
+    def adopt_child(self, c):
+        if self.can_have_child() == False:
+            raise Exception("Can't adopt a person")
+        if not (c.__class__.__name__ == "Baby" or c.__class__.__name__ == "Teenager"):
+            raise Exception("c can't be adopted")
+        else:
+            self.children.append(c.get_id())
+
+            
     ''' public method to check if Person is Male '''
     def is_male(self):
         return self.__genre == "Male"
@@ -155,6 +178,8 @@ class Baby(Person):
         return False
     def can_be_married(self):
         return False
+    def can_have_child(self):
+        return False
 
 ''' Define a Teenager class '''
 class Teenager(Person):
@@ -168,6 +193,8 @@ class Teenager(Person):
     def can_vote(self):
         return False
     def can_be_married(self):
+        return False
+    def can_have_child(self):
         return False
 
 ''' Define a Adult class '''
@@ -183,6 +210,8 @@ class Adult(Person):
         return True
     def can_be_married(self):
         return True
+    def can_have_child(self):
+        return True
 
 ''' Define a Senior class '''
 class Senior(Person):
@@ -197,6 +226,9 @@ class Senior(Person):
         return True
     def can_be_married(self):
         return True
+    def can_have_child(self):
+        return False
+
     
 ''' Take a list of Person or subclass instances and write a JSON file '''
 def save_to_file(list, filename):
