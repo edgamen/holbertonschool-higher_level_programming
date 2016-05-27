@@ -133,6 +133,7 @@
 		B8203F2C1CF8FFA700AAE279 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B8203F321CF9035F00AAE279 /* EntitiesHelper.swift */,
 				B8203F2D1CF8FFBD00AAE279 /* Entity.swift */,
 			);
 			name = Models;
@@ -142,7 +143,6 @@
 			isa = PBXGroup;
 			children = (
 				B8203F301CF9018F00AAE279 /* TechCompaniesListViewController.swift */,
-				B8203F321CF9035F00AAE279 /* EntitiesHelper.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
