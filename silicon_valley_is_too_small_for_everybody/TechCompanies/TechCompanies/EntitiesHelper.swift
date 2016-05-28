@@ -24,12 +24,12 @@ class EntityHelper {
     static func getTechCompanies() -> [Entity]!
     {
         if listOfTechCompany.count == 0 {
-            listOfSchool.append(Entity(name: "Linkedin", town: "San Francisco", imageName: "linkedin", type: .TechCompany))
-            listOfSchool.append(Entity(name: "Docker", town: "San Francisco", imageName: "docker", type: .TechCompany))
-            listOfSchool.append(Entity(name: "Google", town: "Mountain View", imageName: "google", type: .TechCompany))
-            listOfSchool.append(Entity(name: "Yahoo", town: "Sunnyvale", imageName: "yahoo", type: .TechCompany))
-            listOfSchool.append(Entity(name: "Apple", town: "Cupertino", imageName: "apple", type: .TechCompany))
-            listOfSchool.append(Entity(name: "Twitter", town: "San Francisco", imageName: "twitter", type: .TechCompany))
+            listOfTechCompany.append(Entity(name: "Linkedin", town: "San Francisco", imageName: "linkedin", type: .TechCompany))
+            listOfTechCompany.append(Entity(name: "Docker", town: "San Francisco", imageName: "docker", type: .TechCompany))
+            listOfTechCompany.append(Entity(name: "Google", town: "Mountain View", imageName: "google", type: .TechCompany))
+            listOfTechCompany.append(Entity(name: "Yahoo", town: "Sunnyvale", imageName: "yahoo", type: .TechCompany))
+            listOfTechCompany.append(Entity(name: "Apple", town: "Cupertino", imageName: "apple", type: .TechCompany))
+            listOfTechCompany.append(Entity(name: "Twitter", town: "San Francisco", imageName: "twitter", type: .TechCompany))
         }
         
         return listOfTechCompany
