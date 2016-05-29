@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Root View Controller-->
@@ -37,6 +38,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="AKg-iR-xEj" kind="show" identifier="techDetailSegue" id="V7H-UG-shx"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -49,6 +53,54 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mx4-0n-X0e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="792" y="501"/>
+        </scene>
+        <!--Tech Company Detail View Controller-->
+        <scene sceneID="Cod-46-s6O">
+            <objects>
+                <viewController id="AKg-iR-xEj" customClass="TechCompanyDetailViewController" customModule="TechCompanies" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="N5u-wO-YwO"/>
+                        <viewControllerLayoutGuide type="bottom" id="4ex-US-7e6"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="N1K-Fw-Vyg">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64t-pq-nmo">
+                                <rect key="frame" x="0.0" y="20" width="600" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="MqM-ms-pqV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lrw-ta-rMS">
+                                <rect key="frame" x="200" y="60" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="Qo8-zn-IB1"/>
+                                    <constraint firstAttribute="height" constant="200" id="sbc-MI-oWs"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="64t-pq-nmo" firstAttribute="top" secondItem="N5u-wO-YwO" secondAttribute="bottom" id="37i-ol-5pG"/>
+                            <constraint firstItem="Lrw-ta-rMS" firstAttribute="centerX" secondItem="N1K-Fw-Vyg" secondAttribute="centerX" id="AP3-xs-iHD"/>
+                            <constraint firstItem="64t-pq-nmo" firstAttribute="centerX" secondItem="N1K-Fw-Vyg" secondAttribute="centerX" id="Vrp-yZ-W8I"/>
+                            <constraint firstItem="Lrw-ta-rMS" firstAttribute="top" secondItem="64t-pq-nmo" secondAttribute="bottom" id="hii-qq-CRr"/>
+                            <constraint firstItem="64t-pq-nmo" firstAttribute="leading" secondItem="N1K-Fw-Vyg" secondAttribute="leadingMargin" constant="-20" id="mAX-mg-ZWn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="64t-pq-nmo" secondAttribute="trailing" constant="-20" id="n96-9R-Ncp"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="image_entity" destination="Lrw-ta-rMS" id="xxE-cJ-ogl"/>
+                        <outlet property="label_entity" destination="64t-pq-nmo" id="ELr-EL-JKI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ErI-yH-jgz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1459" y="501"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="DKV-oa-vrq">

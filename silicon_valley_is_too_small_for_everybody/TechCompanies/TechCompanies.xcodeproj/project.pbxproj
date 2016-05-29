@@ -16,6 +16,7 @@
 		B8203F2E1CF8FFBD00AAE279 /* Entity.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8203F2D1CF8FFBD00AAE279 /* Entity.swift */; };
 		B8203F311CF9018F00AAE279 /* TechCompaniesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8203F301CF9018F00AAE279 /* TechCompaniesListViewController.swift */; };
 		B8203F331CF9035F00AAE279 /* EntitiesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8203F321CF9035F00AAE279 /* EntitiesHelper.swift */; };
+		B88C35A11CFA76860071A8A1 /* TechCompanyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B88C35A01CFA76860071A8A1 /* TechCompanyDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		B8203F2D1CF8FFBD00AAE279 /* Entity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Entity.swift; sourceTree = "<group>"; };
 		B8203F301CF9018F00AAE279 /* TechCompaniesListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TechCompaniesListViewController.swift; sourceTree = "<group>"; };
 		B8203F321CF9035F00AAE279 /* EntitiesHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntitiesHelper.swift; sourceTree = "<group>"; };
+		B88C35A01CFA76860071A8A1 /* TechCompanyDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TechCompanyDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				B8203F301CF9018F00AAE279 /* TechCompaniesListViewController.swift */,
+				B88C35A01CFA76860071A8A1 /* TechCompanyDetailViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				B8203F331CF9035F00AAE279 /* EntitiesHelper.swift in Sources */,
 				B8203EFF1CF8FF5F00AAE279 /* AppDelegate.swift in Sources */,
 				B8203F311CF9018F00AAE279 /* TechCompaniesListViewController.swift in Sources */,
+				B88C35A11CFA76860071A8A1 /* TechCompanyDetailViewController.swift in Sources */,
 				B8203F2E1CF8FFBD00AAE279 /* Entity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -506,6 +510,7 @@
 				B8203F251CF8FF5F00AAE279 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B8203F261CF8FF5F00AAE279 /* Build configuration list for PBXNativeTarget "TechCompaniesTests" */ = {
 			isa = XCConfigurationList;
@@ -514,6 +519,7 @@
 				B8203F281CF8FF5F00AAE279 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B8203F291CF8FF5F00AAE279 /* Build configuration list for PBXNativeTarget "TechCompaniesUITests" */ = {
 			isa = XCConfigurationList;
@@ -522,6 +528,7 @@
 				B8203F2B1CF8FF5F00AAE279 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -12,6 +12,7 @@ class TechCompaniesListViewController: UITableViewController {
     
     var schoolList: [Entity]! = EntityHelper.getSchools()
     var techCompanyList: [Entity]! = EntityHelper.getTechCompanies()
+    let techDetailSegue = "techDetailSegue"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,14 +102,29 @@ class TechCompaniesListViewController: UITableViewController {
     }
     */
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == techDetailSegue {
+            let segueController = segue.destinationViewController as! TechCompanyDetailViewController
+
+            for item in techCompanyList
+            {
+                if sender!.textLabel!!.text == item.name {
+                    segueController.entity = item
+                }
+            }
+            for item in schoolList
+            {
+                if sender!.textLabel!!.text == item.name {
+                    segueController.entity = item
+                }
+            }
+            
+        }
     }
-    */
 
 }
