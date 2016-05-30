@@ -12,7 +12,6 @@ class TechCompaniesListViewController: UITableViewController {
     
     var schoolList: [Entity]! = EntityHelper.getSchools()
     var techCompanyList: [Entity]! = EntityHelper.getTechCompanies()
-    let techDetailSegue = "techDetailSegue"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,23 +107,39 @@ class TechCompaniesListViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        let techDetailSegue = "techDetailSegue"
+        
         if segue.identifier == techDetailSegue {
             let segueController = segue.destinationViewController as! TechCompanyDetailViewController
 
-            for item in techCompanyList
-            {
-                if sender!.textLabel!!.text == item.name {
-                    segueController.entity = item
-                }
+            let retrieved_entity = retrieve_entity(sender)
+            if retrieved_entity != nil {
+                segueController.entity = retrieved_entity
             }
-            for item in schoolList
-            {
-                if sender!.textLabel!!.text == item.name {
-                    segueController.entity = item
-                }
+            else {
+                print("name of sender cell did not match any entity name")
+            }
+            
+            
+        }
+    }
+    
+    func retrieve_entity(sender: AnyObject?) -> Entity? {
+        for item in techCompanyList
+        {
+            if sender!.textLabel!!.text == item.name {
+                return item
+            }
+        }
+        for item in schoolList
+        {
+            if sender!.textLabel!!.text == item.name {
+                return item
             }
             
         }
+        return nil
     }
 
 }
