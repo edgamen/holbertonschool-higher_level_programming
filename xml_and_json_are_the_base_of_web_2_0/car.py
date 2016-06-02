@@ -15,9 +15,9 @@ class Car:
             brand = kwargs.get('brand')
             nb_doors = kwargs.get('nb_doors')
 
-        if name == None or not isinstance(name, str):
+        if name == None or not isinstance(str(name), str):
             raise Exception("name is not a string")
-        if brand == None or not isinstance(brand, str):
+        if brand == None or not isinstance(str(brand), str):
             raise Exception("brand is not a string")
         if not isinstance(nb_doors, int) or nb_doors <= 0:
             raise Exception("nb_doors is not > 0")
