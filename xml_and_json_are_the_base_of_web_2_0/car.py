@@ -1,3 +1,5 @@
+import json
+
 ''' describe an object that represents a car '''
 class Car:
 
@@ -22,6 +24,10 @@ class Car:
         self.__brand = brand
         self.__nb_doors = nb_doors
 
+    ''' overloading method to define object when cast as String '''
+    def __str__(self):
+        return "%s %s (%s)" % (self.__name, self.__brand, self.__nb_doors)
+
     ''' public methods to retrieve private attributes '''
     def get_name(self):
         return self.__name
@@ -40,6 +46,6 @@ class Car:
     def to_hash(self):
         return {'name': self.__name, 'brand': self.__brand, 'nb_doors': self.__nb_doors}
 
-    ''' overloading method to define object when cast as String '''
-    def __str__(self):
-        return "%s %s (%s)" % (self.__name, self.__brand, self.__nb_doors)
+    ''' public method to return a string in json format '''
+    def to_json_string(self):
+        return json.dumps(self.to_hash())
