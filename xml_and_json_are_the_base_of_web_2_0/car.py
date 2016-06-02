@@ -1,4 +1,5 @@
 import json
+from xml.dom.minidom import Document
 
 ''' describe an object that represents a car '''
 class Car:
@@ -49,3 +50,17 @@ class Car:
     ''' public method to return a string in json format '''
     def to_json_string(self):
         return json.dumps(self.to_hash())
+
+    ''' public method to return a DOM element '''
+    def to_xml_node(self, doc):
+        car = doc.createElement('car')
+        car.setAttribute('nb_doors', str(self.__nb_doors))
+        name = doc.createElement('name')
+        car.appendChild(name)
+        name_cdata = doc.createCDATASection(self.__name)
+        name.appendChild(name_cdata)
+        brand = doc.createElement('brand')
+        car.appendChild(brand)
+        brand_content = doc.createTextNode(self.__brand)
+        brand.appendChild(brand_content)
+        return car
