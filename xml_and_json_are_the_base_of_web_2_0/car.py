@@ -30,6 +30,12 @@ class Car:
     def get_nb_doors(self):
         return self.__nb_doors
 
+    ''' public method to update the private attribuet nb_doors '''
+    def set_nb_doors(self, number):
+        if not isinstance(number, int) or number <= 0:
+            raise Exception("provided number is not > 0")
+        self.__nb_doors = number
+
     ''' public method to return a hash describing the object '''
     def to_hash(self):
         return {'name': self.__name, 'brand': self.__brand, 'nb_doors': self.__nb_doors}
