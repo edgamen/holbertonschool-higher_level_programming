@@ -21,7 +21,7 @@ def print_table(args):
         print "Please enter the name of the table you wish to print in lowercase."
         return
 
-    requested_table = args[1]
+    requested_table = args[0]
 
     if requested_table not in model_entries.keys():
         print "Undefined table: %s. Please make sure to use all lowercase to select table." % selected_table
@@ -51,8 +51,8 @@ def insert_entry(args):
             return
 	elif len(args) == 2:
 	    new_entry = Batch.create(name=args[1])
-        elif len(args) == 3 && is_number(args[1]):
-	    new_entry = Batch.create(school=school_id, name=args[4])
+        elif len(args) == 3 and is_number(args[1]):
+	    new_entry = Batch.create(school=args[1], name=args[2])
         else:
             print "Please provide a valid integer for the school foreign key."
             return

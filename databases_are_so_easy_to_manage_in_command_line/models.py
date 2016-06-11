@@ -31,12 +31,18 @@ class User(BaseModel):
     age = peewee.IntegerField(null=False)
 
     def __str__(self):
-        return "User: %s %s (%d)" % (self.first_name, self.last_name, self.id)
+        if self.first_name == "":            
+            return "User: %s (%d)" % (self.last_name, self.id)
+        else:
+            return "User: %s %s (%d)" % (self.first_name, self.last_name, self.id)
 
 class Student(User):
     batch = peewee.ForeignKeyField(Batch, related_name="students", on_delete="CASCADE")
 
     def __str__(self):
-        return "Student: %s %s (%d) part of the batch: %s" % (self.first_name, self.last_name, self.id, self.batch.name)
+        if self.first_name == "":
+            return "Student: %s (%d) part of the batch: %s" % (self.last_name, self.id, self.batch.name)
+        else:
+            return "Student: %s %s (%d) part of the batch: %s" % (self.first_name, self.last_name, self.id, self.batch.name)
     
 ''' TEST SECTION 2 '''
