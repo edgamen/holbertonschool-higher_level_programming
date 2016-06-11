@@ -2,24 +2,32 @@ from models import *
 import peewee
 import sys
 
+''' Return if string can be successfully cast as int '''
+def is_number(str):
+    try:
+        int(str)
+        return True
+    except ValueError:
+        return False
+
 ''' create all tables related to all models form models file '''
 def create_tables():
     my_models_db.create_tables([School, Batch, User, Student])
 
 ''' print requested table line by line '''
 def print_table(args):
-    model_entries = {'school': School.select(), 'batch': Batch.select(), 'user': User.select(), 'student': Student.select()}
+    model_entries = {'school': School, 'batch': Batch, 'user': User, 'student': Student}
     if len(args) == 0:
         print "Please enter the name of the table you wish to print in lowercase."
         return
 
-    selected_table = args[1]
+    requested_table = args[1]
 
-    if selected_table not in model_entries.keys():
+    if requested_table not in model_entries.keys():
         print "Undefined table: %s. Please make sure to use all lowercase to select table." % selected_table
         return
 
-    for row in model_entries[selected_table]:
+    for row in model_entries[requested_table].select():
         print row
 
 def insert_entry(args):
@@ -27,7 +35,9 @@ def insert_entry(args):
         print "Please enter the name of the table you wish to modify in lowercase."
         return
 
-    if args[0] == "school":
+    requested_table = args[0]
+    
+    if requested_table == "school":
         if len(args) < 2:
 	    print "Please provide the following arguments for school: <name>"
             return
@@ -35,51 +45,56 @@ def insert_entry(args):
 	new_entry = School.create(name=args[1])
 	print "New school: " + str(new_entry)
             
-    elif args[0] == "batch":
-	if len(args) != 2 && len(args) != 3:
+    elif requested_table == "batch":
+	if len(args) != 2 and len(args) != 3:
 	    print "Please provide the following arguments for batch: (<school id>) <name>"
             return
 	elif len(args) == 2:
-	    school_id = int(args[1])
 	    new_entry = Batch.create(name=args[1])
-        elif len(args) == 3:
-	    try:
-		school_id = int(args[3])
-		new_entry = Batch.create(school=school_id, name=args[4])
-	    except ValueError:
-		print "Please provide a valid integer for the school id."
-                return
-
+        elif len(args) == 3 && is_number(args[1]):
+	    new_entry = Batch.create(school=school_id, name=args[4])
+        else:
+            print "Please provide a valid integer for the school foreign key."
+            return
+            
    	print "New batch: " + str(new_entry)    
 
-    elif args[0] == "student":
+    elif requested_table == "student":
         if len(args) < 3 or len(args) > 5:
 	    print "Please provide the following arguments for student: (<batch id>) <age> <last_name> (<first_name>)"
             return
 
         if len(args) == 3:
+            if is_number(args[1]):
+                new_entry = Student.create(age=int(args[1]), last_name=args[2])
+            else:
+                print "Please provide a valid integer for the age of the student."
+                return
+        
+        elif len(args) == 4:
+            if is_number(args[1]):
+                if is_number(args[2]):
+                    new_entry = Student.create(batch=args[1], age=args[2], last_name=args[3])
+                else:
+                    new_entry = Student.create(age=args[1], last_name=args[2], first_name=args[3])
+            else:
+                print "Please provide a valid integer for the age of the student."
+                return
 
+        elif len(args) == 5:
+            if not is_number(args[1]):
+                print "Please provide a valid integer for the batch foreign key."
+                return
+            if not is_number(args[2]):
+                print "Please provide a valid integer for the age of the student."
+                return
+            else:
+                new_entry = Student.create(batch=args[1], age=args[2], last_name=args[3], first_name=args[4])
 
-
-            try:
-		batch_id = int(args[3])
-		student_age = int(args[4])
-		new_entry = Student.create(batch=batch_id, age=student_age, last_name=args[5], first_name=args[6])
-		print "New student: " + str(new_entry)
-	    except ValueError:
-		print "Please provide a valid integer for the batch id and age."
-	else:
-	    try:
-		batch_id = int(args[3])
-		student_age = int(args[4])
-		new_entry = Student.create(batch=batch_id, age=student_age, last_name=args[5])
-		print "New student: " + str(new_entry)
-	    except ValueError:
-		print "Please provide a valid integer for the batch id and age."
+        print "New student: " + str(new_entry)
+        
     else:
-	print "Undefined table: %s. Please make sure to use all lowercase to select table." % args[2]'''
-
-''' TEST SECTION 0 '''
+	print "Undefined table: %s. Please make sure to use all lowercase to select table." % args[2]
 
 action_list = ["create", "print", "insert", "delete"]
 
@@ -97,7 +112,5 @@ else:
         print_table(sys.argv[2:])
     elif sys.argv[1] == "insert":
         insert_entry(sys.argv[2:])
-
-''' TEST SECTION 1 '''
         
        
