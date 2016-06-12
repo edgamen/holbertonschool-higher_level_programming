@@ -1,7 +1,5 @@
 import peewee
 
-''' TEST SECTION 1 '''
-
 my_models_db = peewee.SqliteDatabase('my_models.db', pragmas=(('foreign_keys', True), ))
 # pragmas: don't know what they are yet 
 
@@ -44,5 +42,3 @@ class Student(User):
             return "Student: %s (%d) part of the batch: %s" % (self.last_name, self.id, self.batch.name)
         else:
             return "Student: %s %s (%d) part of the batch: %s" % (self.first_name, self.last_name, self.id, self.batch.name)
-    
-''' TEST SECTION 2 '''

@@ -2,7 +2,7 @@ from models import *
 import peewee
 import sys
 
-''' Return if string can be successfully cast as int '''
+''' return if string can be successfully cast as int '''
 def is_number(str):
     try:
         int(str)
@@ -30,6 +30,7 @@ def print_table(args):
     for row in model_entries[requested_table].select():
         print row
 
+''' insert a new entry into the database table requested '''
 def insert_entry(args):
     if len(args) == 0:
         print "Please enter the name of the table you wish to modify in lowercase."
@@ -46,11 +47,9 @@ def insert_entry(args):
 	print "New school: " + str(new_entry)
             
     elif requested_table == "batch":
-	if len(args) != 2 and len(args) != 3:
-	    print "Please provide the following arguments for batch: (<school id>) <name>"
+	if len(args) != 3:
+	    print "Please provide the following arguments for batch: <school id> <name>"
             return
-	elif len(args) == 2:
-	    new_entry = Batch.create(name=args[1])
         elif len(args) == 3 and is_number(args[1]):
 	    new_entry = Batch.create(school=args[1], name=args[2])
         else:
@@ -60,41 +59,28 @@ def insert_entry(args):
    	print "New batch: " + str(new_entry)    
 
     elif requested_table == "student":
-        if len(args) < 3 or len(args) > 5:
-	    print "Please provide the following arguments for student: (<batch id>) <age> <last_name> (<first_name>)"
+        if len(args) < 4 or len(args) > 5:
+	    print "Please provide the following arguments for student: <batch id> <age> <last_name> (<first_name>)"
             return
-
-        if len(args) == 3:
-            if is_number(args[1]):
-                new_entry = Student.create(age=int(args[1]), last_name=args[2])
-            else:
-                print "Please provide a valid integer for the age of the student."
-                return
-        
+      
         elif len(args) == 4:
-            if is_number(args[1]):
-                if is_number(args[2]):
-                    new_entry = Student.create(batch=args[1], age=args[2], last_name=args[3])
-                else:
-                    new_entry = Student.create(age=args[1], last_name=args[2], first_name=args[3])
+            if is_number(args[1]) and is_number (args[2]):
+                new_entry = Student.create(batch=args[1], age=args[2], last_name=args[3])
             else:
-                print "Please provide a valid integer for the age of the student."
+                print "Please provide a valid integer for the batch foreign key / age of the student."
                 return
 
         elif len(args) == 5:
-            if not is_number(args[1]):
-                print "Please provide a valid integer for the batch foreign key."
-                return
-            if not is_number(args[2]):
-                print "Please provide a valid integer for the age of the student."
-                return
-            else:
+            if is_number(args[1]) and is_number (args[2]):
                 new_entry = Student.create(batch=args[1], age=args[2], last_name=args[3], first_name=args[4])
-
+            else:
+                print "Please provide a valid integer for the batch foreign key / age of the student."
+                return
+    
         print "New student: " + str(new_entry)
         
     else:
-	print "Undefined table: %s. Please make sure to use all lowercase to select table." % args[2]
+	print "Undefined table: %s. Please make sure to use all lowercase to select table." % args[0]
 
 action_list = ["create", "print", "insert", "delete"]
 
