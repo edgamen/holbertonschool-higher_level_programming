@@ -108,20 +108,31 @@ def printby_action(action, args):
     elif not is_number(args[0]):
         print "Please provide a valid integer for the ID of the school or batch."
     elif action == "print_batch_by_school":
-        print "test1"
         results = Batch.select().where(Batch.school == args[0])
+        if results == "":
+            print "School not found"
         for row in results:
             print row
     elif action == "print_student_by_batch":
-        print "test2"
         results = Student.select().where(Student.batch == args[0])
+        if results == "":
+            print "Batch not found"
         for row in results:
             print row        
     else:
-        print "test3"
         results = Student.select().join(Batch).where(Batch.school == args[0])
+        if results == "":
+            print "School not found"
         for row in results:
             print row       
+
+''' description 
+def print_family(args):
+
+    if len(args) == 0:
+        print "Please provide the last name of the family to print."
+    elif
+'''        
             
 # a hash that lists functions for a given action        
 core_actions = ['create', 'print', 'insert', 'delete']
