@@ -99,43 +99,41 @@ def call_core_action(action, args):
         else:
             core_functions[action](model_entries[requested_table], args[1:])
 
-def printby_action(type_object, filter_object, args):
+''' define the print_by actions and validate arguments '''
+def printby_action(action, args):
     my_models_db.connect()
     
     if len(args) == 0:
         print "Please provide a id for the school or batch"
     elif not is_number(args[0]):
         print "Please provide a valid integer for the ID of the school or batch."
-    elif (type_object == Student and filter_object == Batch.school):
-        print "dsaj"
+    elif action == "print_batch_by_school":
+        print "test1"
+        results = Batch.select().where(Batch.school == args[0])
+        for row in results:
+            print row
+    elif action == "print_student_by_batch":
+        print "test2"
+        results = Student.select().where(Student.batch == args[0])
+        for row in results:
+            print row        
+    else:
+        print "test3"
         results = Student.select().join(Batch).where(Batch.school == args[0])
         for row in results:
-            print row
-    else:
-        print "moop"
-        results = type_object.select().where(filter_object == args[0])
-        for row in results:
-            print row
+            print row       
             
 # a hash that lists functions for a given action        
 core_actions = ['create', 'print', 'insert', 'delete']
 # defines type of printable object and filter for a specific query
-printby_actions = { \
-    'print_batch_by_school': {'type_object': Batch, 'filter_object': Batch.school}, \
-    'print_student_by_batch': {'type_object': Student, 'filter_object': Student.batch}, \
-    'print_student_by_school': {'type_object': Student, 'filter_object': Batch.school} \
-}
+printby_actions = ['print_batch_by_school', 'print_student_by_batch', 'print_student_by_school']
 more_actions = ['print_family', 'age_average', 'change_batch']
 
 if len(sys.argv) < 2:
     print "Please enter an action"
 elif sys.argv[1] in core_actions:
     call_core_action(sys.argv[1], sys.argv[2:])
-elif sys.argv[1] in printby_actions.keys():
-    query = printby_actions[sys.argv[1]]
-    print sys.argv[1]
-    print printby_actions[sys.argv[1]]['type_object']
-    print printby_actions[sys.argv[1]]['filter_object']
-    printby_action(query['type_object'], query['filter_object'], sys.argv[2:])
+elif sys.argv[1] in printby_actions:
+    printby_action(sys.argv[1], sys.argv[2:])
 else:
     print "Undefined action " + sys.argv[1]
