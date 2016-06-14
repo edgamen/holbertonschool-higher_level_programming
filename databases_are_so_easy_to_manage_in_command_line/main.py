@@ -117,6 +117,7 @@ def printby_action(action, args):
         results = Student.select().where(Student.batch == args[0])
         if results == "":
             print "Batch not found"
+            return
         for row in results:
             print row        
     else:
