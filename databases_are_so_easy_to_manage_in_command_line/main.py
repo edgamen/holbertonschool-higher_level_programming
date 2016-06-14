@@ -124,21 +124,70 @@ def printby_action(action, args):
         if results == "":
             print "School not found"
         for row in results:
-            print row       
+            print row
+            
+''' find the age average of students, of a single batch if id provided in first argument '''
+def age_average(args):
+    if len(args) != 0 and is_number(args[0]):
+        batch_id = args[0]
+        record = Student.select(Student, peewee.fn.Avg(Student.age).alias('age_average')).where(Student.batch == batch_id).get()
+    else:
+        record = Student.select(Student, peewee.fn.Avg(Student.age).alias('age_average')).get()
+    print record.age_average
 
-''' description 
+
+''' change the batch of a provided student, using student id as first arg and batch id as second arg  '''
+def change_batch(args):
+    if len(args) < 2:
+        print "Please provide the following arguments: <student id> <batch id>"
+        return
+    if not is_number(args[0]) or not is_number(args[1]):
+        print "Please provide a valid integer for both of the ids."
+        return
+
+    try:
+        student_to_modify = Student.select().where(Student.id == args[0]).get()
+    except:
+        print "Student not found"
+        return
+
+    student_batch = student_to_modify.batch
+    
+    try:
+        new_batch = Batch.select().where(Batch.id == args[1]).get()
+    except:
+        print "Batch not found"
+        return
+
+    if new_batch == student_batch:
+        print "%s already in %s" % (str(student_to_modify), str(student_batch))
+    else:
+        student_to_modify.batch = args[1]
+        student_to_modify.save()
+        print "%s has been move to %s" %(str(student_to_modify), str(new_batch))
+            
+''' show students by a particular last name '''
 def print_family(args):
 
     if len(args) == 0:
         print "Please provide the last name of the family to print."
-    elif
-'''        
-            
+    else:
+        results = Student.select().where(Student.last_name == args[0])
+        for row in results:
+            print row
+
+'''def print_all():
+    schools_and_batches = School.select().join(Batch)
+    for school in schools:
+        print str(school)
+        print "\t%s" % school.batch
+        print "\t\t%s" 
+'''            
 # a hash that lists functions for a given action        
 core_actions = ['create', 'print', 'insert', 'delete']
 # defines type of printable object and filter for a specific query
 printby_actions = ['print_batch_by_school', 'print_student_by_batch', 'print_student_by_school']
-more_actions = ['print_family', 'age_average', 'change_batch']
+more_actions = {'print_family': print_family, 'age_average': age_average, 'change_batch': change_batch}
 
 if len(sys.argv) < 2:
     print "Please enter an action"
@@ -146,5 +195,7 @@ elif sys.argv[1] in core_actions:
     call_core_action(sys.argv[1], sys.argv[2:])
 elif sys.argv[1] in printby_actions:
     printby_action(sys.argv[1], sys.argv[2:])
+elif sys.argv[1] in more_actions.keys():
+    more_actions[sys.argv[1]](sys.argv[2:])
 else:
     print "Undefined action " + sys.argv[1]
