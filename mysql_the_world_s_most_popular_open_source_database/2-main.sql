@@ -4,3 +4,5 @@ select TVShow.name, count(Season.id) as nb_seasons from Season join TVShow on (S
 select TVShow.name as 'TVShow name', Network.name as 'Network name' from TVShow join Network on (TVShow.network_id = Network.id) order by TVShow.name;
 \! echo "\nList of TVShows ordered by name (A-Z) in the Network 'Fox (US)'?"
 select TVShow.name from TVShow join Network on (TVShow.network_id = Network.id) where Network.name = 'FOX (US)';
+\! echo "\nNumber of episodes by TVShows ordered by name (A-Z)?"
+select TVShow.name, count(Episode.id) from TVShow join Season on (TVShow.id = Season.tvshow_id) join Episode on (Season.id = Episode.season_id) group by tvshow_id order by TVShow.name; 
