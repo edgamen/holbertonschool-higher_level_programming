@@ -35,6 +35,7 @@ class OrderedArrayThread(threading.Thread):
         threading.Thread.__init__(self)
 
     def run(self):
+
         OrderedArrayThread.lock.acquire()
         OrderedArray.list.append(self.number)
         OrderedArray.list.sort()
