@@ -37,6 +37,15 @@ class OrderedArrayThread(threading.Thread):
     def run(self):
 
         OrderedArrayThread.lock.acquire()
+
+        if len(OrderedArray.list) == 0:
+            OrderedArray.list.append(self.number)
+            OrderedArrayThread.lock.release()
+            return
+        for index, item in enumerate(OrderedArray.list):
+            if self.number < item:
+                OrderedArray.list.insert(index, self.number)
+                OrderedArrayThread.lock.release()
+                return
         OrderedArray.list.append(self.number)
-        OrderedArray.list.sort()
         OrderedArrayThread.lock.release()
