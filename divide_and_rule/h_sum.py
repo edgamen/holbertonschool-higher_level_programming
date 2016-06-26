@@ -1,6 +1,6 @@
 import threading
 
-sum = 0
+total_sum = 0
 
 class Sum:
 
