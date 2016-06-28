@@ -17,7 +17,7 @@ class Sum:
         self.threads = []
         list_slices = []
 
-        ''' divides array into roughly nb_number chunks '''
+        ''' divides numbers array array into roughly nb_threads chunks '''
         for x in range(0, len(numbers), len(numbers)/nb_threads):
             slice = numbers[x:x+len(numbers)/nb_threads]
             list_slices.append(slice)
@@ -27,11 +27,13 @@ class Sum:
         if len(list_slices) > nb_threads:
             list_slices[nb_threads - 1] += list_slices[nb_threads]
 
+        ''' for each slice of numbers we have created, start a thread to calculate their sum '''
         for slice in list_slices[: nb_threads]:
             thread = SumThread(slice)
             self.threads += [thread]
             thread.start()
 
+    ''' return whether threads are still computing the sum '''
     def isComputing(self):
         for thread in self.threads:
             if thread.isAlive():
@@ -51,6 +53,7 @@ class SumThread(threading.Thread):
         self.numbers = numbers
         threading.Thread.__init__(self)
 
+    ''' calculate the sum of the chunk that has been given to the thread '''
     def run(self):
         global total_sum
         total_sum += sum(self.numbers)
