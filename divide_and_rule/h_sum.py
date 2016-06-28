@@ -53,7 +53,8 @@ class SumThread(threading.Thread):
         self.numbers = numbers
         threading.Thread.__init__(self)
 
-    ''' calculate the sum of the chunk that has been given to the thread '''
+    ''' calculate the sum of the chunk that has been given to the thread, and add
+        to total sum'''
     def run(self):
         global total_sum
         total_sum += sum(self.numbers)
