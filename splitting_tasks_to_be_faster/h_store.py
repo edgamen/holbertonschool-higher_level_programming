@@ -12,9 +12,11 @@ class Store:
         self.item_number = item_number
         self.__sema = threading.Semaphore(person_capacity)
 
+    ''' when a person enters, add count towards sema capacity '''
     def enter(self):
         self.__sema.acquire()
 
+    ''' simulate person buying an item and release sema once for person leaving'''
     def buy(self):
         time.sleep(random.uniform(5,10))
         if (self.item_number) <= 0:
